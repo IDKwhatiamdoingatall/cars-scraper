@@ -15,7 +15,7 @@ app.post("/scrape", async (req, res) => {
     res.json(results);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Scraping failed" });
+    res.status(500).json({ error: "Scraping failed", message: err.message });
   }
 });
 
