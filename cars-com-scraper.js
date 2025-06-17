@@ -20,7 +20,7 @@ async function scrapeCars(query = "2018 BMW 550i") {
       const link = card.querySelector('a')?.href;
 
       return {
-        title: \`\${title} \${subtitle}\`.trim(),
+        title: `${title} ${subtitle}`.trim(),
         price,
         mileage,
         link,
