@@ -21,21 +21,19 @@ async function scrapeCars(query = "2018 BMW 550i") {
     await page.waitForSelector("article.vehicle-card", { timeout: 20000 });
 
     const cars = await page.$$eval("article.vehicle-card", cards =>
-      cards.slice(0, 10).map(card => {
-        const title = card.querySelector("h2")?.innerText?.trim();
-        const price = card.querySelector('[data-test="vehicleCardPricingBlockPrice"]')?.innerText?.trim();
-        const mileage = card.querySelector('[data-test="vehicleMileage"]')?.innerText?.trim();
-        const link = card.querySelector("a")?.href;
+  cards.slice(0, 10).map(card => {
+    try {
+      const title = card.querySelector("h2")?.innerText?.trim() || "No title";
+      const price = card.querySelector('[data-test="vehicleCardPricingBlockPrice"]')?.innerText?.trim() || "No price";
+      const mileage = card.querySelector('[data-test="vehicleMileage"]')?.innerText?.trim() || "No mileage";
+      const link = card.querySelector("a")?.href || "";
 
-        return {
-          title,
-          price,
-          mileage,
-          link,
-        };
-      })
-    );
-
+      return { title, price, mileage, link };
+    } catch (e) {
+      return { error: "Failed to parse one card" };
+    }
+  })
+);
     await browser.close();
     return cars;
   } catch (err) {
