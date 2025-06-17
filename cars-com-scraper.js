@@ -9,18 +9,17 @@ async function scrapeCars(query = "2018 BMW 550i") {
 
   await page.goto(url, { waitUntil: "domcontentloaded" });
 
-  await page.waitForSelector('[data-test="vehicle-card"]');
+  await page.waitForSelector('article.vehicle-card');
 
-  const cars = await page.$$eval('[data-test="vehicle-card"]', cards =>
+  const cars = await page.$$eval('article.vehicle-card', cards =>
     cards.slice(0, 10).map(card => {
-      const title = card.querySelector('[data-test="vehicle-card-year-make"]')?.innerText?.trim();
-      const subtitle = card.querySelector('[data-test="vehicle-card-model"]')?.innerText?.trim();
-      const price = card.querySelector('[data-test="vehicle-card-price"]')?.innerText?.trim();
+      const title = card.querySelector('h2')?.innerText?.trim();
+      const price = card.querySelector('[data-test="vehicleCardPricingBlockPrice"]')?.innerText?.trim();
       const mileage = card.querySelector('[data-test="vehicleMileage"]')?.innerText?.trim();
       const link = card.querySelector('a')?.href;
 
       return {
-        title: `${title} ${subtitle}`.trim(),
+        title,
         price,
         mileage,
         link,
