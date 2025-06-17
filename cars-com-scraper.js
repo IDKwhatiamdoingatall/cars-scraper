@@ -5,7 +5,7 @@ async function scrapeCars(query = "2018 BMW 550i") {
   const page = await browser.newPage();
 
   const searchQuery = encodeURIComponent(query);
-  const url = \`https://www.cars.com/shopping/results/?stock_type=all&makes[]=&models[]=&list_price_max=&maximum_distance=all&zip=&keyword=\${searchQuery}\`;
+  const url = `https://www.cars.com/shopping/results/?stock_type=all&makes[]=&models[]=&list_price_max=&maximum_distance=all&zip=&keyword=${searchQuery}`;
 
   await page.goto(url, { waitUntil: "domcontentloaded" });
 
