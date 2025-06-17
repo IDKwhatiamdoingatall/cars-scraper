@@ -5,10 +5,10 @@ async function scrapeCars(query = "2018 BMW 550i") {
   const page = await browser.newPage();
 
   try {
-    // Set a real browser user agent to avoid bot blocking
-    await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    );
+    // Proper way to spoof User-Agent
+    await page.setExtraHTTPHeaders({
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    });
 
     const searchQuery = encodeURIComponent(query);
     const url = `https://www.cars.com/shopping/results/?stock_type=all&makes[]=&models[]=&list_price_max=&maximum_distance=all&zip=&keyword=${searchQuery}`;
@@ -35,9 +35,6 @@ async function scrapeCars(query = "2018 BMW 550i") {
         };
       })
     );
-
-    // Optional: save screenshot for debugging
-    // await page.screenshot({ path: "debug.png", fullPage: true });
 
     await browser.close();
     return cars;
