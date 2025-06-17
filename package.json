@@ -1,0 +1,13 @@
+{
+  "name": "cars-scraper",
+  "version": "1.0.0",
+  "description": "Scraper for Cars.com listings",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "playwright": "^1.42.1"
+  }
+}
